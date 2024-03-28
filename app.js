@@ -4,16 +4,24 @@ const bodyParser = require('body-parser');
 const cors = require('cors'); // Adicione esta linha
 
 const PORT = process.env.PORT || 3000;
-
+const { db } = require('pg');
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors()); // Adicione esta linha para habilitar o CORS
 
 
-// Conectar ao banco de dados SQLite (cria o banco se não existir)
-const db = new sqlite3.Database('./mydatabase.db');
 
+// Conectar ao banco de dados SQLite (cria o banco se não existir)
+const db = new sqlite3.Database({
+  user: 'seu_usuario',
+  host: 'localhost',
+  database: 'seu_banco_de_dados',
+  password: 'sua_senha',
+  port: 5432, // Porta padrão do PostgreSQL
+    });
+
+    
 // Criação da tabela "pedidos" se não existir
 db.run(`CREATE TABLE IF NOT EXISTS cursos (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
